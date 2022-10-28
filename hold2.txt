@@ -1,0 +1,71 @@
+#include <algorithm>
+#include <iostream>
+#include <random>
+#include <vector>
+
+using namespace std;
+
+class Card {
+protected:
+  int value;
+  void setValue(int v) { value = v; }
+
+public:
+  Card(int v) { value = v; }
+  int getValue() { return value; }
+};
+
+class WarCard : public Card {
+  int multiplier;
+
+public:
+  WarCard() : Card(1) { multiplier = rand() % 5 + 1; }
+  WarCard(int mul) : Card(1) { multiplier = mul; }
+  WarCard(int val, int mul) : Card(val) { multiplier = mul; }
+  void setMultiplier(int mul) { multiplier = mul; }
+  int getValue() { return value; }
+  int getMultiplier() { return multiplier; }
+  int score() { return value * multiplier; }
+};
+template <class T> class Deck {
+  vector<T *> deck;
+  int size;
+
+protected:
+  void init(int s) {
+    size = s;
+    int v = 0;
+    for (int i = 0; i < size; i++) {
+      deck.push_back(new T(i % 5 + 1, i % 5 + 1));
+    }
+  }
+
+public:
+  Deck() { init(50); }
+  Deck(int s) { init(s); }
+  void shuffle() {
+    // auto rd = std::random_device{};
+    // auto rng = std::default_random_engine{rd()};
+    auto rng = std::default_random_engine{};
+    std::shuffle(std::begin(deck), std::end(deck), rng);
+  }
+  void print() {
+    for (int i = 0; i < size; i++) {
+      cout << deck[i]->getValue() << " ";
+    }
+    cout << endl;
+  }
+};
+
+class Player {};
+
+class War {};
+
+int main() {
+  Deck<WarCard> d(100);
+  d.print();
+  d.shuffle();
+  d.print();
+    d.shuffle();
+  d.print();
+}

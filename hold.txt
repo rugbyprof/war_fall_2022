@@ -1,0 +1,71 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+class Card {
+  int value;
+
+protected:
+  void setValue(int x) { value = x; }
+
+public:
+  Card(int v) { value = v; }
+  int getValue() { return value; }
+};
+
+class WarCard : public Card {
+  int multiplier;
+
+public:
+  WarCard(int val) : Card(val) { multiplier = rand() % 5 + 1; }
+  WarCard(int val, int mul) : Card(val) { multiplier = mul; }
+};
+
+template <class T> class Deck {
+  int size;
+
+public:
+  vector<T *> deck;
+  Deck() { size = 0; }
+  Deck(int s) {
+    for (int i; i < s; i++) {
+      deck.push_back(new WarCard(i));
+    }
+  }
+};
+
+class Player {
+public:
+  string name;
+  Player(string in_name) { name = in_name; }
+};
+
+class War {
+  vector<Player *> players;
+  Deck<WarCard> *warDeck;
+
+public:
+  War() { warDeck = new Deck<WarCard>(100); }
+  War(int size) { warDeck = new Deck<WarCard>(size); }
+  War(vector<Player *> pptr, int size) {
+    warDeck = new Deck<WarCard>(size);
+    players = pptr;
+  }
+  void addPlayer(string name) { players.push_back(new Player(name)); }
+  void printPlayers() {
+    for (int i = 0; i < players.size(); i++) {
+      cout << players[i]->name << endl;
+    }
+  }
+};
+
+int main() {
+
+  vector<Player *> players;
+  players.push_back(new Player("Bob"));
+  players.push_back(new Player("Sue"));
+  War war(players, 100);
+
+  war.printPlayers();
+}
