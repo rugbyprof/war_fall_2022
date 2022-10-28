@@ -99,18 +99,33 @@ protected:
 
 class War {};
 
-int main() {
-  Deck<WarCard> d(100);
-  d.print();
-  d.shuffle();
-  d.print();
-  d.shuffle();
-  d.print();
-  Hand<WarCard> h;
-  WarCard* w = new WarCard;
+int warMenu(){
+  vector<string> options;
+  options.push_back("New Game");
+  options.push_back("Continue Game");
+  options.push_back("Add Player");
+  options.push_back("Help");
 
-  cout<<w->getValue()<<endl;
-  h.addCard(w);
-  cout<<endl<<endl;
-  h.print();
+  cout<<"War Menu!!"<<endl;
+  for (int i=0;i<options.size();i++)
+    cout<<"\t "<<i+1<<": "<<options[i]<<endl;
+  return 0;
+}
+
+int main() {
+  // Deck<WarCard> d(100);
+  // d.print();
+  // d.shuffle();
+  // d.print();
+  // d.shuffle();
+  // d.print();
+  // Hand<WarCard> h;
+  // WarCard* w = new WarCard;
+
+  // cout<<w->getValue()<<endl;
+  // h.addCard(w);
+  // cout<<endl<<endl;
+  // h.print();
+
+  warMenu();
 }
